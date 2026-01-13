@@ -17,4 +17,20 @@ body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align
 .bio{margin-top:1rem;color:var(--muted);line-height:1.5}
 .links{margin-top:1.2rem;display:flex;gap:0.6rem;justify-content:center}
 .btn{display:inline-block;padding:0.55rem 0.9rem;border-radius:8px;background:linear-gradient(90deg,rgba(125,211,252,0.12),rgba(125,211,252,0.06));color:var(--accent);text-decoration:none;border:1px solid rgba(125,211,252,0.08)}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;   /* vertically centers icon and text */
+  gap: 0.5rem;           /* space between icon and text */
+  color: inherit;
+}
+
+.icon {
+  width: 1.8em;          /* scale icon relative to text size */
+  height: 1.8em;
+  display: inline-block;
+  color:white;
+  fill:white
+}
+
 @media (max-width:520px){.page{padding:0 1rem}.card{padding:1.3rem}}

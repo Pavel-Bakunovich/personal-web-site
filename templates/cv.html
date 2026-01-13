@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="cv">
+  <header class="cv-header">
+    <h1 class="cv-name">Pavel Bakunovich</h1>
+    <p class="cv-subtitle">Project Manager • Engineer • Maker</p>
+    <p class="contact">
+      <a href="mailto:pavel@bakunovich.me">pavel@bakunovich.me</a>
+      • <a href="tel:+123456789">+1 (234) 567‑89</a>
+      • <a href="{{ url_for('static', filename='docs/cv.pdf') }}" download>Download PDF</a>
+    </p>
+  </header>
+
+  <section class="cv-summary">
+    <h2>Summary</h2>
+    <p>Experienced project manager and engineer focused on delivering reliable products and building strong cross-functional teams. Passionate about learning, mentoring, and hands-on problem solving.</p>
+  </section>
+
+  <section class="cv-grid">
+    <div class="cv-left">
+      <section class="cv-skills">
+        <h3>Skills</h3>
+        <ul>
+          <li>Project Management • Agile & Scrum</li>
+          <li>Systems Engineering • Design & Execution</li>
+          <li>Python • Flask • Automation</li>
+          <li>Cross-functional leadership • Mentoring</li>
+        </ul>
+      </section>
+
+      <section class="cv-education">
+        <h3>Education</h3>
+        <p><strong>University Name</strong><br/>B.Sc. in Engineering — Year</p>
+      </section>
+    </div>
+
+    <div class="cv-right">
+      <section class="cv-experience">
+        <h3>Experience</h3>
+        <article class="job">
+          <h4>Senior Project Manager — Company</h4>
+          <p class="job-meta">2020 — Present</p>
+          <p>Led delivery of multiple cross-disciplinary projects, improved delivery predictability, and mentored junior PMs.</p>
+        </article>
+
+        <article class="job">
+          <h4>Engineer — Company</h4>
+          <p class="job-meta">2015 — 2020</p>
+          <p>Designed and implemented systems, collaborated with stakeholders, and contributed to product roadmaps.</p>
+        </article>
+      </section>
+    </div>
+  </section>
+
+  <footer class="cv-footer">
+    <a href="{{ url_for('index') }}" class="btn">← Back to home</a>
+  </footer>
+</article>
+{% endblock %}

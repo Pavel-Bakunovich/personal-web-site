@@ -6,10 +6,19 @@
   <h1 class="name">Pavel Bakunovich</h1>
   <p class="bio">Christian, Project Manager, Engineer, Geek, Husband, Father, Son, Reader, Home Cook, Soccer Player, Brazilian Jiu-Jitsu Player, Leather Craftsman.</p>
 
+<a href="{{ url_for('cv') }}" class="icon-link" aria-label="Open CV">
+ <img src="{{ url_for('static', filename='images/cv.svg') }}" class="icon"/>
+  <span>My CV</span>
+</a>
+
   <div class="links">
     <a href="#" class="btn">GitHub</a>
     <a href="#" class="btn">LinkedIn</a>
     <a href="#" class="btn">Telegram</a>
+</a>
+</a>
   </div>
+  <br/>
+  <a href="mailto:pavel@bakunovich.me" class="title">pavel@bakunovich.me</a>
 </div>
 {% endblock %}
