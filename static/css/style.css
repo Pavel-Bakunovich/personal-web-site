@@ -1,10 +1,10 @@
 :root{
   --bg1:#0f1724;
-  --bg2:#0b1220;
+  --bg2:#0e212f;
   --card:#0b1220;
   --muted:#9aa4b2;
   --accent:#7dd3fc;
-  --avatar-min: 120px;    /* min accessible size */
+  --avatar-min: 220px;    /* min accessible size */
   --avatar-max: 520px;   /* max size you want */
   --avatar-fluid: 18vw;   /* preferred fluid size (viewport-based) */
   --avatar-size: clamp(var(--avatar-min), var(--avatar-fluid), var(--avatar-max));
@@ -14,12 +14,24 @@
 html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef6}
 body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:3rem}
 .page{width:100%;max-width:860px}
-.card{background:rgba(255,255,255,0.03);padding:2.4rem;border-radius:12px;box-shadow:0 6px 30px rgba(2,6,23,0.6);text-align:center}
 .name{margin:0;font-weight:600;font-size:2.6rem}
 .title{margin:0.3rem 0;color:var(--muted)}
 .bio{margin-top:1rem;color:var(--muted);line-height:1.5}
-.links{margin-top:1.2rem;display:flex;gap:0.6rem;justify-content:center}
 .btn{display:inline-block;padding:0.55rem 0.9rem;border-radius:8px;background:linear-gradient(90deg,rgba(125,211,252,0.12),rgba(125,211,252,0.06));color:var(--accent);text-decoration:none;border:1px solid rgba(125,211,252,0.08)}
+
+.links{
+  margin-top:1.2rem;
+  display:flex;
+  gap:0.6rem;
+  justify-content:center;
+  color:white;
+  text-decoration: none;
+}
+
+.card{
+  padding:2.4rem;
+  text-align:center;
+}
 
 .icon-link {
   display: inline-flex;
@@ -33,7 +45,7 @@ body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align
   height: 1.8em;
   display: inline-block;
   color:white;
-  fill:white
+  fill:white;
 }
 
 .avatar {
