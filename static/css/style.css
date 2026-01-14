@@ -4,6 +4,10 @@
   --card:#0b1220;
   --muted:#9aa4b2;
   --accent:#7dd3fc;
+  --avatar-min: 48px;    /* min accessible size */
+  --avatar-max: 520px;   /* max size you want */
+  --avatar-fluid: 18vw;   /* preferred fluid size (viewport-based) */
+  --avatar-size: clamp(var(--avatar-min), var(--avatar-fluid), var(--avatar-max));
 }
 
 *{box-sizing:border-box}
@@ -11,7 +15,6 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe U
 body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:3rem}
 .page{width:100%;max-width:860px}
 .card{background:rgba(255,255,255,0.03);padding:2.4rem;border-radius:12px;box-shadow:0 6px 30px rgba(2,6,23,0.6);text-align:center}
-.avatar{width:500px;height:500px;border-radius:50%;border:3px solid rgba(255,255,255,0.06);display:block;margin:0 auto 1rem}
 .name{margin:0;font-weight:600;font-size:2.6rem}
 .title{margin:0.3rem 0;color:var(--muted)}
 .bio{margin-top:1rem;color:var(--muted);line-height:1.5}
@@ -31,6 +34,23 @@ body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align
   display: inline-block;
   color:white;
   fill:white
+}
+
+.avatar {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  border:3px solid rgba(255,255,255,0.06);
+  margin:0 auto 1rem
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* keeps image centered & cropped nicely */
+  display: block;
 }
 
 @media (max-width:520px){.page{padding:0 1rem}.card{padding:1.3rem}}
