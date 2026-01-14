@@ -86,19 +86,18 @@ body{
 .cv-title h1{margin:0;font-size:2rem;color:#fff}
 .cv-role{margin:0.25rem 0;color:rgba(255,255,255,0.85);font-size:1.1rem}
 .container{max-width:860px;margin:2.2rem auto;padding:0 1rem}
-.lead{font-size:1.125rem;color:var(--muted);line-height:1.6}
+.lead{font-size:1.125rem;line-height:1.6}
 .cv-nav{display:flex;gap:1rem;justify-content:center;margin:1rem 0}
 .cv-nav a{color:var(--accent);text-decoration:none;font-weight:600}
-.cv-section{padding:2rem 0}
 .section-title{margin:0 0 1rem;font-size:1.4rem;color:#e6eef6}
-.light{background:transparent;border-radius:8px;padding:1.6rem;color:var(--muted)}
-.skills-list{list-style:none;padding-left:0}
+.light{background:transparent;border-radius:8px;padding:1.6rem;}
+.skills-list{padding-left:0}
 .skills-list li{margin-bottom:0.6rem}
 .timeline{display:flex;flex-direction:column;gap:1.6rem}
 .timeline-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;align-items:start}
 .time{font-weight:600;color:var(--muted)}
 .timeline-row h3{margin:0 0 0.3rem;color:#e6eef6}
-.story p{margin-bottom:1rem;color:var(--muted)}
+.story p{margin-bottom:1rem;}
 .cv-cta{display:flex;flex-direction:column;align-items:center;gap:1rem;margin:2rem 0}
 .btn.download{background:#0f3f7a;color:#fff;padding:0.8rem 1.2rem;border-radius:8px;text-decoration:none}
 .contacts{display:flex;flex-direction:column;align-items:center;gap:0.6rem;margin-top:0.6rem}
