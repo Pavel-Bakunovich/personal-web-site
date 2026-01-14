@@ -1,60 +1,146 @@
 {% extends "base.html" %}
 
 {% block content %}
-<article class="cv">
-  <header class="cv-header">
-    <h1 class="cv-name">Pavel Bakunovich</h1>
-    <p class="cv-subtitle">Project Manager • Engineer • Maker</p>
-    <p class="contact">
-      <a href="mailto:pavel@bakunovich.me">pavel@bakunovich.me</a>
-      • <a href="tel:+123456789">+1 (234) 567‑89</a>
-      • <a href="{{ url_for('static', filename='docs/cv.pdf') }}" download>Download PDF</a>
-    </p>
-  </header>
-
-  <section class="cv-summary">
-    <h2>Summary</h2>
-    <p>Experienced project manager and engineer focused on delivering reliable products and building strong cross-functional teams. Passionate about learning, mentoring, and hands-on problem solving.</p>
-  </section>
-
-  <section class="cv-grid">
-    <div class="cv-left">
-      <section class="cv-skills">
-        <h3>Skills</h3>
-        <ul>
-          <li>Project Management • Agile & Scrum</li>
-          <li>Systems Engineering • Design & Execution</li>
-          <li>Python • Flask • Automation</li>
-          <li>Cross-functional leadership • Mentoring</li>
-        </ul>
-      </section>
-
-      <section class="cv-education">
-        <h3>Education</h3>
-        <p><strong>University Name</strong><br/>B.Sc. in Engineering — Year</p>
-      </section>
-    </div>
-
-    <div class="cv-right">
-      <section class="cv-experience">
-        <h3>Experience</h3>
-        <article class="job">
-          <h4>Senior Project Manager — Company</h4>
-          <p class="job-meta">2020 — Present</p>
-          <p>Led delivery of multiple cross-disciplinary projects, improved delivery predictability, and mentored junior PMs.</p>
-        </article>
-
-        <article class="job">
-          <h4>Engineer — Company</h4>
-          <p class="job-meta">2015 — 2020</p>
-          <p>Designed and implemented systems, collaborated with stakeholders, and contributed to product roadmaps.</p>
-        </article>
-      </section>
+  <!-- Cover -->
+  <section class="cv-cover">
+    <div class="cv-cover-inner">
+      <img src="{{ url_for('static', filename='images/profile.jpeg') }}" alt="Avatar" class="cv-avatar">
+      <div class="cv-title">
+        <h1>Pavel Bakunovich</h1>
+        <p class="cv-role">Senior Project Manager</p>
+      </div>
     </div>
   </section>
 
-  <footer class="cv-footer">
+  <!-- Summary -->
+  <section class="cv-summary container">
+    <p class="lead">I'm a project manager currently acting as a manager of portfolio consisting of 16+ projects. Total headcount ~330ppl. Started career in 2008 as .NET engineer. Turned to project manager role in 2016. I currently work at EPAM systems. We create software for our client using various set of technologies: Java, Python, Angular, React, AWS, Gen AI. My role is to organize structured processes so everybody knows what to do, establish relationships with client, seek and win opportunities, staff new teams, take care of people and help them grow.</p>
+  </section>
+
+  <!-- In-page navigation -->
+  <nav class="cv-nav" aria-label="On-page navigation">
+    <a href="#work-experience">Work Experience</a>
+    <a href="#my-skills">My Skills</a>
+    <a href="#biography">Biography</a>
+  </nav>
+
+  <!-- Work Experience -->
+  <section id="work-experience" class="cv-section container">
+    <h2 class="section-title">Work Experience</h2>
+    <div class="timeline">
+      <div class="timeline-row">
+        <div class="time">2021 - now</div>
+        <div class="content">
+          <h3>Portfolio Manager at EPAM Systems</h3>
+          <p>Manager of portfolio consisting of 16+ projects, mostly working in staff augmentation mode. Total headcount ~330ppl. Part of ~1500ppl account.
+My role is to organize structured processes so everybody knows what to do, establish relationships with client, seek and win opportunities, staff new teams, take care of people and help them grow.
+Priorities I take care of:
+<li>How to shape leadership structure in my organization?</li>
+<li>Am I making my financial targets (like margin and revenue)?</li>
+<li>How can I find opportunities to grow my business?</li>
+<li>How can I help my leaders grow professionally?</li>
+<li>How my portfolio is contributing to my account's success / company’s success?</li></p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="time">2018 - 2021</div>
+        <div class="content">
+          <h3>Project Manager at EPAM Systems</h3>
+          <p>We were working on 2 products in Legal business domain: 1. So-called “Google for lawyers”. It’s a web-based container of legal documents and a search mechanism built on top of them. 2. Desktop-based app that provided tools and automation for drafting legal documents. These projects are part of the Managed Service program operating in full ownership mode: the team is ultimately responsible for delivering results end-to-end. It gives a lot of freedom in decision making and a high level of accountability at the same time. Key highlights of my role:
+• Managed transition of the project from another vendor, coordinated all the process - from putting together transition plan till start of autonomous work.
+• Performed annual roadmap planning - taking into account such things as estimates, budgets, resource plan, priorities, dependencies on other teams.
+• Worked under strict SLA with financial penalties for breaching metrics threshold.
+• Produced resource plan and team structure, hired the team of 20+ people form the scratch.
+• Organised work of the project team, established processes - such as overall project lifecycle, scrum ceremonies, scrum of scrums with external teams, continuous improvements, analysis of metrics, etc…
+• Made staffing decisions, managed attrition, worked on retaining people.
+• Worked with escalations from client - concerns and complaints about things client wasn’t happy about.
+• Did status reporting on different levels - such as status reporting to all project stakeholders, status reporting on program level.
+• Operated in complicated setup of Product Owners - there were many of them (~10) and with conflicting interests.
+• Organized project management structure, established roles and responsibilities in the team (who does what).
+• Coordinated end to end delivery of projects - starting from the initial requirements discussion and high-level roadmap planning till execution of the release plan and post-release support.
+• Communicated with difficult client - handled micromanagement, constant pressure, tough negotiations, blame and escalations.
+• Client had very high expectations from the team. Persisted in requesting more work to be done than capacity allowed. Team operated under constant pressure of delivering results according to commitments. Thus, absorbed a lot of stress coming out of that.
+• Fostered “ownership” mindset in the team. Every project was treated as a commitment, a promise, for which we are accountable for. If an obstacle arose on the way - team should be considering every possible option to mitigate the obstacle without breaking commitment.
+
+Team: 20+ team members, including leadership roles such as Tech Lead, Scrum Master, Architect, QA Lead.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="time">2016 - 2018</div>
+        <div class="content">
+          <h3>Lead of Innovations Program at EPAM Systems</h3>
+          <p>Activities I perform in Innovations Program:
+- Design and shape strategy of the program
+- Seek for Innovations Challenges
+- Build a team, solve Innovations Challenges
+- Regular presentations of Innovations Program for customers
+- Facilitate brainstorms</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="time">2013 - 2016</div>
+        <div class="content">
+          <h3>Team Lead at EPAM Systems</h3>
+          <p>This project was started from the idea born in Innovations Program. My team implemented the prototype, presented it to client and they decided to turn it into a full fledged product. Here is my responsibilities:
+- Communicating with customer: clarifying requirements, release and sprint planning
+- Assigning tasks to team members
+- Staffing I've prepared my replacement person, took part in hiring remaining team and finished my assignment on this project.
+- Coding.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="time">2012 - 2013</div>
+        <div class="content">
+          <h3>Lead Software Engineer at EPAM Systems</h3>
+          <p>Worked on Eikon Mobile (financial application). Coordinated with client, planned development and delivered production-quality solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="my-skills" class="cv-section container light">
+    <h2 class="section-title">My skills</h2>
+    <ul class="skills-list">
+      <li>— PMP Certified: <a href="https://www.credly.com/badges/426f0543-7219-47a2-92d9-821ab9e74ee3/public_url" target="_blank" rel="noreferrer noopener">View certificate on Credly</a> or <a href="{{ url_for('static', filename='PMP Certificate - Pavel Bakunovich.pdf') }}">see the PDF version.</a></li>
+      <li>— Project management: SDLC, Agile/Scrum, planning, risk and change management, budgeting.</li>
+      <li>— Development background: understanding of core engineering concepts and Gen AI fundamentals.</li>
+      <li>— Languages: English C1, basic Polish, native Russian/Belarusian.</li>
+    </ul>
+  </section>
+
+  <!-- Biography / Story -->
+  <section id="biography" class="cv-section container">
+    <h2 class="section-title">Biography</h2>
+    <div class="story">
+      <p><strong>Beginning</strong><br>First time I got into programming when I was in ~7−8 grade in high school. I signed up to optional classes where we were taught Pascal. Since then, I was hooked up. Later I got higher education in computer science in college and then in BNTU university.</p>
+
+      <p><strong>Professional start</strong><br>I joined EPAM in 2008 as a Junior .NET engineer after ~5 months long course at EPAM's classes at university. Very long and excruciating. I remember how I was presenting my final project. The most stressful moment of my life at that time :) But I passed and started my learning path in .NET Lab. My first shock was when I heard from my mentor: "Forget everything you were taught in university. Now you gotta learn how to write production code.". Turned out you shouldn’t name variables like "a" and "b" in production! :) A short while later, I got to the production project. Met amazing people, from whom I continued learning and learning.</p>
+
+      <p><strong>Being software engineer</strong><br>2008−2014 I grew very fast and was promoted to Team Leader. In 2013 I was working on a project where we developed trading platform. That was the time of my first remarkable achievement. Me and my teammate in our free time developed a prototype of trading platform for new version of Blackberry OS. Our leadership helped present it to the client and, to our surprise and joy, client decided to turn it into a fully-fledged project. That was a triumph. Fast forward to 2015, we did the same for Windows Phone. Another new project that was started out of our idea. Overall, I enjoyed coding, enjoyed learning from my senior teammates. Good times.</p>
+
+      <p><strong>Becoming a project manager</strong><br>Back to the project where we developed trading platform. I was eager to learn and grow. I was curios. I was eager to always help teammates. I cared about stuff. There was a moment when my Project Manager had to take long leave of absence due to birth of his child. All of a sudden, he told me "You run the project when I’m out. Alright? See ya!". It was unexpected and shocking, but I was pretty confident. I knew the process. Relationships with my teammates were very positive. So I embraced the new role of Team Lead & Project Manager. 1 month after, my Project Manager returned and told me: "I gotta go to another project. You take my role here for good. Alright? See ya!". That was even more shocking news, but I liked it. That’s how I became project manager, in sort of "involuntary" way.</p>
+
+      <p><strong>Innovation Program</strong><br>We had a lot of fun on that trading platform project. As I already told, we started 2 new projects out of our ideas. Also we proposed multiple feature ideas to the client. This got attention of Innovation Program. An initiate the we ran for the client back then. I was offered a role of Head of Innovation Program. I took it. It was even more fun. We developed an innovations portal. We brainstormed ideas for the client across many projects. We developed POCs, participated in innovation challenges issued by client. Won some. But honestly, I think taking this role was a bit premature for me. I was very young and inexperienced manager. I didn't have a proper vision for the program. I couldn't make it valuable enough for the client. I just had fun doing things I like — building teams, doing POCs, inspiring everybody to invent useful ideas for the client’s products.</p>
+
+      <p><strong>Years of blood, sweat and tears</strong><br>In 2018 I received an offer to join very interesting program. It was a set of projects that were supposed to be managed in a full-blown responsibility mode. Means we did everything — architecture, getting requirements directly from business, roadmap planning, execution, releasing, even tracking of the client’s budget. That was period of fast and painful growth. Over the course of 3 years, I matured tremendously. But lost my hair and got a lot of grey hairs in my beard :)
+When I started, it was immediately obvious that it was very stressful environment. Pressure from client, pressure from my program leadership, SLA commitments and penalties for breaching. I was in the situation when EPAM was on the brink of paying hefty penalty for breaching SLA if I didn't defend my metrics on the SLA review meeting. I had to establish a development process that produced fast results. I had to make hard decisions by laying off underperformers. I had to have tough conversations with my people, from whom I needed better performance. My program manager had to have tough conversations with me, from whom he needed better performance. Client stakeholder was pushing me every day, trying to squeeze every possible deliverable from my team.
+In the beginning, I was thinking to resign. Pressure and criticism from my program manager and overall lack of common language was that high, it made me wondering — we probably shouldn’t work together. But we kept it constructive. The only thing that held me from resigning — I felt my leader sincerely cared about my growth and project’s success. Although he didn't care about choosing careful words. He was tough because the situation was tough.
+After those most challenging and stressful 3 years of my life, I built very strong relationships with my program manager. I cannot express how grateful I am to him for all what I learned. Now, we hug and smile when we meet.
+Delivery-vise — every year we delivered the whole project roadmap that we planned without major slippage. Team was very strong. I’m happy I helped some of my team members grow to the next level. One Senior Engineer became excellent Tech Lead. One Tech Lead became very strong Architect. Juniors became Seniors.</p>
+
+      <p><strong>Portfolio Manager (current)</strong><br>After that tremendously difficult project, I think I got sort of post traumatic disorder :) I remember one meeting on a new project, where client was giving me hard time during staffing of the new team. I prepared to a meeting as usual. I came with prepared scenarios, options, arguments. Figuratively speaking, brought a shotgun, guns, knifes, grenades to the meeting. I was armed and ready for the bloody fight better than Arnold Schwarzenegger in Commando movie. I made my pitch. And client said "Alright, let’s do as you proposed". 5 minutes. I didn't expect that — what do I do with my guns then? :) That’s where I realized I’m not at war anymore.
+In 2021 I was offered a role of portfolio manager at a big account. It was a next level for me. Now instead of managing dev team, delivering features, making releases I need to build an organization. I like the analogy that our principal delivery manager uses: "This role is pretty much like being CEO. And you treat your portfolio as a company that you are running". That’s a different mindset. I had to take some time absorbing it. My priories switched from iterations, roadmaps, status meetings, agile ceremonies to How to build relationships with this stakeholder? How to shape leadership structure in my organization? Am I making my financial targets (like margin and revenue)? How can I find opportunities to grow my business? How can I help my leaders grow professionally? How my portfolio is contributing to account's success / company’s success?
+I started with the portfolio of ~50 people in 2021. Now our portfolio is 330+ people. We survived 2022. Went through massive ramp down, then massive ramp up. I put special focus on helping people grow: Lead Test Automation Engineer grew to Project Manager, Lead Engineer to Project Manager, Project Manager to Portfolio Manager, Tech Lead to Architect.
+This journey goes on.</p>
+    </div>
+  </section>
+
+  <footer class="cv-footer container">
     <a href="{{ url_for('index') }}" class="btn">← Back to home</a>
   </footer>
-</article>
 {% endblock %}

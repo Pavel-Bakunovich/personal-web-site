@@ -12,9 +12,20 @@
 
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef6}
-body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;padding:3rem}
+body{
+  /* fallback and prevent banding/artifact by fixing the gradient to viewport */
+  background-color: var(--bg2);
+  background-image: linear-gradient(180deg, var(--bg1), var(--bg2));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:3rem 0;
+  min-height:100vh
+}
 .page{width:100%;max-width:860px}
-.name{margin:0;font-weight:600;font-size:2.6rem}
+.name{margin:0;font-weight:300;font-size:2.6rem}
 .title{margin:0.3rem 0;color:var(--muted)}
 .bio{margin-top:1rem;color:var(--muted);line-height:1.5}
 .btn{display:inline-block;padding:0.55rem 0.9rem;border-radius:8px;background:linear-gradient(90deg,rgba(125,211,252,0.12),rgba(125,211,252,0.06));color:var(--accent);text-decoration:none;border:1px solid rgba(125,211,252,0.08)}
@@ -66,3 +77,36 @@ body{background:linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;align
 }
 
 @media (max-width:520px){.page{padding:0 1rem}.card{padding:1.3rem}}
+
+/* CV page styles */
+.cv-page{color:var(--muted);font-size:18px}
+.cv-cover{background-size:cover;background-position:center;padding:3.4rem 0 2rem;color:#fff}
+.cv-cover-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;padding:1rem}
+.cv-avatar{width:160px;height:160px;border-radius:50%;background-size:cover;background-position:center;border:3px solid rgba(255,255,255,0.12)}
+.cv-title h1{margin:0;font-size:2rem;color:#fff}
+.cv-role{margin:0.25rem 0;color:rgba(255,255,255,0.85);font-size:1.1rem}
+.container{max-width:860px;margin:2.2rem auto;padding:0 1rem}
+.lead{font-size:1.125rem;color:var(--muted);line-height:1.6}
+.cv-nav{display:flex;gap:1rem;justify-content:center;margin:1rem 0}
+.cv-nav a{color:var(--accent);text-decoration:none;font-weight:600}
+.cv-section{padding:2rem 0}
+.section-title{margin:0 0 1rem;font-size:1.4rem;color:#e6eef6}
+.light{background:transparent;border-radius:8px;padding:1.6rem;color:var(--muted)}
+.skills-list{list-style:none;padding-left:0}
+.skills-list li{margin-bottom:0.6rem}
+.timeline{display:flex;flex-direction:column;gap:1.6rem}
+.timeline-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;align-items:start}
+.time{font-weight:600;color:var(--muted)}
+.timeline-row h3{margin:0 0 0.3rem;color:#e6eef6}
+.story p{margin-bottom:1rem;color:var(--muted)}
+.cv-cta{display:flex;flex-direction:column;align-items:center;gap:1rem;margin:2rem 0}
+.btn.download{background:#0f3f7a;color:#fff;padding:0.8rem 1.2rem;border-radius:8px;text-decoration:none}
+.contacts{display:flex;flex-direction:column;align-items:center;gap:0.6rem;margin-top:0.6rem}
+.social{display:flex;gap:0.6rem}
+
+@media (max-width:720px){
+  .cv-cover-inner{flex-direction:column;align-items:center;text-align:center}
+  .timeline-row{grid-template-columns:1fr}
+  .time{order:2}
+}
+
