@@ -4,7 +4,7 @@
   --card:#0b1220;
   --muted:#9aa4b2;
   --accent:#7dd3fc;
-  --avatar-min: 48px;    /* min accessible size */
+  --avatar-min: 120px;    /* min accessible size */
   --avatar-max: 520px;   /* max size you want */
   --avatar-fluid: 18vw;   /* preferred fluid size (viewport-based) */
   --avatar-size: clamp(var(--avatar-min), var(--avatar-fluid), var(--avatar-max));
