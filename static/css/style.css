@@ -83,7 +83,7 @@ body{
 .cv-cover{background-size:cover;background-position:center;padding:3.4rem 0 2rem;color:#fff}
 .cv-cover-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1rem;padding:1rem}
 .cv-avatar{width:160px;height:160px;border-radius:50%;background-size:cover;background-position:center;border:3px solid rgba(255,255,255,0.12)}
-.cv-title h1{margin:0;font-size:2rem;color:#fff}
+.cv-title h1{margin:0;font-size:2rem;color:#fff;font-weight:300;}
 .cv-role{margin:0.25rem 0;color:rgba(255,255,255,0.85);font-size:1.1rem}
 .container{max-width:860px;margin:2.2rem auto;padding:0 1rem}
 .lead{font-size:1.125rem;line-height:1.6}
