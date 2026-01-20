@@ -10,5 +10,9 @@ def index():
 def cv():
     return render_template('cv.html')
 
+@app.route('/my-story')
+def my_story():
+    return render_template('my-story.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
