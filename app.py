@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, make_response
 import io
-from weasyprint import HTML
+#from weasyprint import HTML
 
 app = Flask(__name__)
 
@@ -16,6 +16,7 @@ def cv():
 def my_story():
     return render_template('my-story.html')
 
+'''
 @app.route('/download-cv')
 def download_cv():
     # Render the CV template
@@ -30,6 +31,8 @@ def download_cv():
     response.headers['Content-Disposition'] = 'attachment; filename=CV Pavel Bakunovich.pdf'
     
     return response
+
+'''
 
 if __name__ == '__main__':
     app.run(debug=True)
