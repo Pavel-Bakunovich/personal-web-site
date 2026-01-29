@@ -97,7 +97,7 @@ body{
 .timeline-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;align-items:start}
 .time{font-weight:600;color:var(--muted)}
 .timeline-row h3{margin:0 0 0.3rem;color:#e6eef6}
-.story p{margin-bottom:1rem;}
+.story p{margin-bottom:1rem; line-height:1.5;}
 .cv-cta{display:flex;flex-direction:column;align-items:center;gap:1rem;margin:2rem 0}
 .btn.download{background:#0f3f7a;color:#fff;padding:0.8rem 1.2rem;border-radius:8px;text-decoration:none}
 .contacts{display:flex;flex-direction:column;align-items:center;gap:0.6rem;margin-top:0.6rem}
