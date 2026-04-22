@@ -1,0 +1,699 @@
+<html>
+<!-- служебная часть -->
+<head>
+    <!-- заголовок страницы -->
+    <title>Доска</title>
+    <!-- настраиваем служебную информацию для браузеров -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- задаём CSS-стили прямо здесь же, чтобы всё было в одном файле -->
+    <style type="text/css">
+    /*задаём общие параметры для всей страницы: шрифт и отступы*/
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 16px;
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    .rule {
+        display: block;
+        text-align: center;
+        font-size: 150%;
+    }
+
+    #editor, #editor:focus {
+        outline: none;
+        border: none;
+        text-align: left;
+        box-sizing: border-box;
+        font-size: 50px;
+        margin: 2%;
+        min-height: 90vh;
+    }
+
+    .App {
+        display: grid;
+        grid-template-columns: 0px 1fr;
+        height: 100vh;
+        transition: .15s ease-in grid-template-columns;
+    }
+
+    .App._withSidebar {
+        grid-template-columns: 200px 1fr;
+    }
+
+    .App-Sidebar {
+        background: #222;
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .App-Sidebar .Sidebar {
+        width: 200px;
+    }
+
+    .App-Editor {
+        padding: 10;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .Sidebar {
+        text-align: left;
+    }
+
+    .Sidebar-Link {
+        display: block;
+        color: #fff;
+        width: 100%;
+        text-decoration: none;
+        padding: 10px;
+        white-space: pre-line;
+        border-bottom: rgba(255, 255, 255, .2) 1px solid;
+        max-height: 80px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 3;
+        -webkit-box-pack: end;
+    }
+
+    .Sidebar-Link:focus {
+        background: #666;
+        border-color: #666;
+        outline: none;
+    }/*закончили со стилями*/
+    </style>
+    <!-- закрываем служебную часть страницы -->
+</head>
+<!-- началось содержимое страницы -->
+
+<body>
+    <!-- началась видимая часть -->
+    <!-- заголовок страницы -->
+    <!-- большой блок для ввода текста: высота в половину, а ширина — во весь экран, назвывается "text_area", обведено рамкой толщиной в 1 пиксель, выравнивание текста — по левому краю -->
+
+    <div class="App">
+        <div class="App-Sidebar">
+            <div class="Sidebar">
+                <a class="Sidebar-Link" href="#07806270395041537"></a>
+            </div>
+        </div>
+        <div class="App-Editor">
+            <div id="editor" style="font-size: 50px;" contenteditable="true"></div>
+        </div>
+    </div>
+
+    <script>
+
+    function HTMLToText(html) {
+        const el = document.createElement('div')
+        el.innerHTML = html
+        return el.innerText
+    }
+
+    // Storage
+    function initNotesStorage() {
+        const LOCAL_STORAGE_KEY = 'notes'
+        let notes = []
+        // Load current version
+        const savedNotes = localStorage.getItem(LOCAL_STORAGE_KEY)
+        if (savedNotes) {
+            notes = JSON.parse(savedNotes)
+        }
+
+        // Migrate old version
+        let text_in_editor = localStorage.getItem('text_in_editor')
+        if (text_in_editor) {
+            add({
+                code: generateCode(),
+                html: text_in_editor,
+            })
+            localStorage.removeItem('text_in_editor')
+        }
+
+        // Initial document
+        if (notes.length == 0) {
+            add(create())
+        }
+
+        function generateCode() {
+            return Math.random().toString().split('.')[1]
+        }
+
+        function store() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes))
+        }
+
+        function create() {
+            return {
+                code: generateCode(),
+                html: '',
+            }
+        }
+
+        function add(note) {
+            notes.push(note)
+            store()
+        }
+
+        function remove(note) {
+            const index = Array.from(notes).indexOf(note)
+            notes.splice(index, 1)
+            store()
+        }
+
+        function update(note) {
+            store()
+        }
+
+        function getByCode(code) {
+            return notes.find(note => note.code == code)
+        }
+
+        return {
+            notes,
+            create,
+            add,
+            remove,
+            update,
+            getByCode,
+        }
+    }
+
+    // Sidebar
+
+    function initSidebar(sidebarElement, options={}) {
+
+        options = {
+            onRemove: (linkElement) => {},
+            onFocus: (linkElement) => {},
+            onClick: (linkElement) => {},
+            ...options,
+        }
+
+        function addKeyboardEventListener() {
+            document.addEventListener('keydown', handleKeydown)
+        }
+
+        function removeKeyboardEventListeners() {
+            document.removeEventListener('keydown', handleKeydown)
+        }
+
+        function handleKeydown(e) {
+            if (!getCurrentLink()) {
+                // Sidebar is not focused
+                return
+            }
+
+            if (e.code == 'ArrowUp') {
+                selectPrev()
+                e.stopPropagation()
+                e.preventDefault()
+                return
+            }
+
+            if (e.code == 'ArrowDown') {
+                selectNext()
+                e.stopPropagation()
+                e.preventDefault()
+                return
+            }
+
+            if (e.code == 'Backspace') {
+                const currentLink = getCurrentLink()
+                if (currentLink) {
+                    options.onRemove(currentLink)
+                }
+                e.stopPropagation()
+                e.preventDefault()
+                return
+            }
+        }
+
+        function getCurrentLink() {
+            return sidebarElement.querySelector('.Sidebar-Link:focus')
+        }
+
+        function getCurrentIndex() {
+            const links = Array.from(sidebarElement.querySelectorAll('.Sidebar-Link'))
+            const currentLink = getCurrentLink()
+            return currentLink ? links.indexOf(currentLink) : null
+        }
+
+        function selectPrev() {
+            const index = getCurrentIndex()
+            select(index === null ? 0 : index - 1)
+        }
+
+        function selectNext() {
+            const index = getCurrentIndex()
+            select(index === null ? 0 : index + 1)
+        }
+
+        function select(index) {
+            const links = sidebarElement.querySelectorAll('.Sidebar-Link')
+            const link = links[(index + links.length) % links.length]
+            link && link.focus()
+        }
+
+        function toggle(visible) {
+            if (visible) {
+                select(0)
+                addKeyboardEventListener()
+            } else {
+                removeKeyboardEventListeners()
+            }
+        }
+
+        sidebarElement.addEventListener('focus', e => {
+            if (e.target.className == 'Sidebar-Link') {
+                options.onFocus(e.target)
+            }
+        })
+
+        sidebarElement.addEventListener('click', e => {
+            if (e.target.className == 'Sidebar-Link') {
+                options.onClick(e.target)
+            }
+        })
+
+        return {
+            toggle,
+        }
+    }
+
+    // Editor
+
+    function initEditor(editorElement, options={}) {
+
+        // editorElement.addEventListener('keyDown', )
+
+        return {
+
+        }
+    }
+
+    // App
+
+    function initApp(appElement) {
+
+        // Sidebar
+
+        const sidebarElement = appElement.querySelector('.Sidebar')
+        const sidebar = initSidebar(sidebarElement, {
+            onRemove: (linkElement) => {
+                const code = linkElement.href.split('#')[1]
+                const note = notesStorage.getByCode(code)
+                if (!note)
+                    return
+
+                const index = notesStorage.notes.indexOf(note)
+                note && notesStorage.remove(note)
+
+                if (notesStorage.notes.length == 0) {
+                    notesStorage.add(notesStorage.create())
+                }
+
+                if (note == currentNote) {
+                    if (notesStorage.notes.length > index) {
+                        setCurrentNote(notesStorage.notes[index], {
+                            focusEditor: false
+                        })
+                    } else {
+                        if (index > 0) {
+                            setCurrentNote(notesStorage.notes[index - 1], {
+                                focusEditor: false
+                            })
+                        } else {
+                            setCurrentNote(notesStorage.notes[0], {
+                                focusEditor: false
+                            })
+                        }
+                    }
+                }
+                refreshSidebar()
+            },
+            onFocus: (linkElement) => {
+                const code = linkElement.href.split('#')[1]
+                const note = notesStorage.getByCode(code)
+                note && setCurrentNote(note)
+            },
+            onClick: (linkElement) => {
+                const code = linkElement.href.split('#')[1]
+                const note = notesStorage.getByCode(code)
+                note && setCurrentNote(note)
+
+            },
+        })// toggleSidebar() // Hide sidebar after selecting a link
+
+        document.addEventListener('keydown', function(e) {
+            if (e.code == 'KeyL' && e.shiftKey && e.altKey) {
+                toggleSidebar()
+                e.stopPropagation()
+                e.preventDefault()
+            }
+        })
+
+        function refreshSidebar() {
+            // It will be turned on, so let’s update its content first
+            sidebarElement.innerHTML = ''
+            const links = notesStorage.notes.map(note => {
+                const link = document.createElement('a')
+                link.className = 'Sidebar-Link'
+                link.href = '#' + note.code
+                link.text = HTMLToText(note.html).trim()
+                return link
+            })
+            for (let link of links) {
+                sidebarElement.appendChild(link)
+            }
+        }
+
+        function toggleSidebar() {
+            const visibleNow = appElement.classList.contains('_withSidebar')
+            if (!visibleNow) {
+                // Will become visible, need to refresh
+                refreshSidebar()
+            }
+
+            const sidebarVisible = appElement.classList.toggle('_withSidebar')
+            sidebar.toggle(sidebarVisible)
+
+            if (!sidebarVisible) {
+                editorElement.focus()
+            } else {
+                const link = sidebarElement.querySelector('[href="#' + currentNote.code + '"]')
+                link && link.focus()
+            }
+        }
+
+        // Editor
+        const editorElement = appElement.querySelector('#editor')
+        const editor = initEditor(editorElement)
+        // Notes
+        const notesStorage = initNotesStorage()
+        let currentNote = notesStorage.notes[0]
+        // Check url
+        if (location.hash) {
+            const code = location.hash.split('#')[1]
+            const note = notesStorage.getByCode(code)
+            if (note) {
+                setCurrentNote(note)
+            }
+        }
+
+        // New note
+        document.addEventListener('keydown', function(e) {
+            if (e.code == 'KeyN' && e.shiftKey && e.altKey) {
+                const newNote = notesStorage.create()
+                notesStorage.add(newNote)
+                setCurrentNote(newNote)
+                refreshSidebar()
+            }
+        })
+        // Edit note
+
+        editorElement.addEventListener('input', e => {
+            currentNote.html = editorElement.innerHTML
+            notesStorage.update(currentNote)
+            refreshSidebar()
+        })
+
+        function setCurrentNote(note, options={
+            focusEditor: true
+        }) {
+            currentNote = note
+            location.hash = note.code
+            editorElement.innerHTML = note.html
+            options.focusEditor && editorElement.focus()
+        }
+
+        refreshSidebar()
+    }
+
+    initApp(document.querySelector('.App'))
+    </script>
+
+    <script>
+    /*Select text area*/
+    document.getElementById("editor").focus();
+
+    var blackboardFontSize = 50;
+    var fontSizeThreshold = 30;
+    var rulesClasses = [];
+
+    document.getElementById('editor').style.fontSize = blackboardFontSize + 'px';
+
+
+    function changeFontSize(target, amount) {
+
+        if (blackboardFontSize + amount >= fontSizeThreshold) {
+            blackboardFontSize = blackboardFontSize + amount;
+            console.log('Setting size to ' + blackboardFontSize);
+            document.getElementById('editor').style.fontSize = blackboardFontSize + 'px';
+        } else {
+            console.log('⚠️ Font size below threshold: ' + blackboardFontSize + 'px');
+            blackboardFontSize = fontSizeThreshold;
+            console.log('Setting size to ' + blackboardFontSize);
+            document.getElementById('editor').style.fontSize = blackboardFontSize + 'px';
+        }
+
+
+
+    }
+    /*document.getElementById(target).style.fontSize = document.getElementById(target).style.fontSize+amount;*/
+
+    function insertTextAtCaret(text) {
+        var sel,
+            range;
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(document.createTextNode(text));
+                range.collapse(false)
+            }
+        } else if (document.selection && document.selection.createRange) {
+            document.selection.createRange().text = text;
+        }
+    }
+
+    /*ГЛАВНЫЙ ЦИКЛ*/
+
+    // if (localStorage.getItem('text_in_editor') !== null) {
+    //   document.getElementById('editor').innerHTML = localStorage.getItem('text_in_editor');
+    // }
+
+    /*Изобразительные элементы и типографика*/
+    document.addEventListener('keydown', function(e) {
+
+        if (event.shiftKey && event.altKey) {
+            switch (event.code) {
+            case 'KeyQ':
+                insertTextAtCaret('✅');
+                event.preventDefault();
+                break;
+            case 'KeyW':
+                insertTextAtCaret('❤️');
+                event.preventDefault();
+                break;
+            case 'KeyE':
+                insertTextAtCaret('⭐');
+                event.preventDefault();
+                break;
+            case 'KeyA':
+                insertTextAtCaret('❌');
+                event.preventDefault();
+                break;
+            case 'KeyS':
+                insertTextAtCaret('⚠️');
+                event.preventDefault();
+                break;
+            case 'KeyD':
+                insertTextAtCaret('👉');
+                event.preventDefault();
+                break;
+            case 'Minus':
+                insertTextAtCaret('—');
+                event.preventDefault();
+                break;
+            case 'Equal':
+                insertTextAtCaret('«');
+                event.preventDefault();
+                break;
+            case 'KeyR':
+                rulesClasses.unshift(applyClassToSelection('rule'));
+                event.preventDefault();
+                break;
+            case 'KeyO':
+                undoRuleClasser();
+                event.preventDefault();
+                break;
+            }
+
+        }
+
+
+        if (event.altKey && !event.shiftKey) {
+            switch (event.code) {
+
+            case 'Equal':
+                insertTextAtCaret('»');
+                event.preventDefault();
+                break;
+            }
+        }
+
+
+
+        if (event.ctrlKey) {
+            switch (event.code) {
+
+            case 'Minus':
+                console.log('Make text smaller');
+                changeFontSize('editor', -5);
+                event.preventDefault();
+                break;
+
+            case 'Equal':
+                changeFontSize('editor', 5);
+                console.log('Make text bigger');
+                event.preventDefault();
+                break;
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+    });
+    </script>
+
+    <script type="text/javascript">
+    var nextId = 0;
+
+    var rangeIntersectsNode = (typeof window.Range != "undefined"
+    && Range.prototype.intersectsNode) ?
+
+    function(range, node) {
+        return range.intersectsNode(node);
+    } :
+
+    function(range, node) {
+        var nodeRange = node.ownerDocument.createRange();
+        try {
+            nodeRange.selectNode(node);
+        } catch (e) {
+            nodeRange.selectNodeContents(node);
+        }
+
+        return range.compareBoundaryPoints(Range.END_TO_START, nodeRange) == -1 &&
+            range.compareBoundaryPoints(Range.START_TO_END, nodeRange) == 1;
+    };
+
+    function applyClassToSelection(cssClass) {
+        var uniqueCssClass = "selection_" + (++nextId);
+        var sel = window.getSelection();
+        if (sel.rangeCount < 1) {
+            return;
+        }
+        var range = sel.getRangeAt(0);
+        var startNode = range.startContainer,
+            endNode = range.endContainer;
+
+        // Split the start and end container text nodes, if necessary
+        if (endNode.nodeType == 3) {
+            endNode.splitText(range.endOffset);
+            range.setEnd(endNode, endNode.length);
+        }
+
+        if (startNode.nodeType == 3) {
+            startNode = startNode.splitText(range.startOffset);
+            range.setStart(startNode, 0);
+        }
+
+        // Create an array of all the text nodes in the selection
+        // using a TreeWalker
+        var containerElement = range.commonAncestorContainer;
+        if (containerElement.nodeType != 1) {
+            containerElement = containerElement.parentNode;
+        }
+
+        var treeWalker = document.createTreeWalker(
+        containerElement,
+        NodeFilter.SHOW_TEXT, // Note that Range.intersectsNode is non-standard but
+        // implemented in WebKit
+        function(node) {
+            return rangeIntersectsNode(range, node) ?
+            NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        },
+        false
+        );
+
+        var selectedTextNodes = [];
+        while (treeWalker.nextNode()) {
+            selectedTextNodes.push(treeWalker.currentNode);
+        }
+
+        var textNode,
+            span;
+
+        // Place each text node within range inside a <span>
+        // element with the desired class
+        for (var i = 0, len = selectedTextNodes.length; i < len; ++i) {
+            textNode = selectedTextNodes[i];
+            span = document.createElement("span");
+            span.className = cssClass + " " + uniqueCssClass;
+            textNode.parentNode.insertBefore(span, textNode);
+            span.appendChild(textNode);
+        }
+
+        return uniqueCssClass;
+    }
+
+    function removeSpansWithClass(cssClass) {
+        var spans = document.body.getElementsByClassName(cssClass),
+            span,
+            parentNode;
+
+        // Convert spans to an array to prevent live updating of
+        // the list as we remove the spans
+        spans = Array.prototype.slice.call(spans, 0);
+
+        for (var i = 0, len = spans.length; i < len; ++i) {
+            span = spans[i];
+            parentNode = span.parentNode;
+            parentNode.insertBefore(span.firstChild, span);
+            parentNode.removeChild(span);
+
+            // Glue any adjacent text nodes back together
+            parentNode.normalize();
+        }
+    }
+
+    var c;
+
+    function undoRuleClasser() {
+        console.log('Removing ' + rulesClasses[0]);
+        removeSpansWithClass(rulesClasses.shift());
+    }
+    </script>
+
+</body>
+</html>

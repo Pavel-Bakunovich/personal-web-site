@@ -16,6 +16,10 @@ def cv():
 def my_story():
     return render_template('my-story.html')
 
+@app.route('/blackboard')
+def blackboard():
+    return render_template('blackboard.html')
+
 '''
 @app.route('/download-cv')
 def download_cv():
